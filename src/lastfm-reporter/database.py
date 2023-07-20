@@ -144,8 +144,13 @@ def get_user_downloaded_intervals(username: str) -> List[Tuple]:
     """
     Get user downloaded intervals
     """
-    intervals_file = open(f".\\backup\\{username}\\downloaded_tracks_intervals", "r+")
+    
+    intervals_file_path = f".\\backup\\{username}\\downloaded_tracks_intervals"
+    
+    if not os.path.exists(intervals_file_path): mode = "w+"
+    else: mode = "r+"
 
+    intervals_file = open(intervals_file_path, mode)
     intervals_list_str = intervals_file.readline()
     if intervals_list_str == "": intervals_list_str = "[]"
     
@@ -161,8 +166,13 @@ def update_user_downloaded_intervals(
     Create or update information about user downloaded tracks, using download intervals
     """
     intervals = Intervals(get_user_downloaded_intervals(username))
+    
+    intervals_file_path = f".\\backup\\{username}\\downloaded_tracks_intervals"
 
-    intervals_file = open(f".\\backup\\{username}\\downloaded_tracks_intervals", "r+")
+    if not os.path.exists(intervals_file_path): mode = "w+"
+    else: mode = "r+"
+
+    intervals_file = open(intervals_file_path, mode)
 
     #Get information about new interval
     from_date = int(interval[0])

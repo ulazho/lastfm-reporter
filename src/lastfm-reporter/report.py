@@ -13,16 +13,16 @@ import database
 
 if __name__ == "__main__":
 
-    username = "Godofdevilll"
+    username = ""
     
 
     user = UserAPI()
 
     tracklist = database.get_user_listened_tracks(
         username= username,
-        # from_date=datetime(2022, 1, 1),
-        # to_date=datetime(2022, 2, 1),
-        period="7day",
+        from_date=datetime(2022, 1, 14),
+        to_date=datetime(2022, 2, 1),
+        #period="7day",
         limit=200
     )
 
