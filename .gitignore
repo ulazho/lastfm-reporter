@@ -152,6 +152,9 @@ dmypy.json
 # Backup
 backup/
 
+#Settings of the IDE
+launch.json
+
 # Cython debug symbols
 cython_debug/
 
