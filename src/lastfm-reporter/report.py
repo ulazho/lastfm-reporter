@@ -15,4 +15,4 @@ if __name__ == "__main__":
 
     username = ""
 
-    database.update_user_listened_tracks(username, period="overall")
+    database.update_user_listened_tracks(username, period="7days")
