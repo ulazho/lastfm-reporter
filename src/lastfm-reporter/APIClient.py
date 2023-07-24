@@ -27,7 +27,7 @@ class BaseAPIClient:
             signature = inspect.signature(func)
 
             #Get given parameters
-            default_parameters = signature.parameters.keys() - {x for x in kwargs.keys()}
+            default_parameters = signature.parameters.keys() - {x for x in kwargs.keys()} - {"self"}
             call = {key: value for key, value in kwargs.items()}
             
             #Change from_date, to_date in from, to
@@ -64,6 +64,7 @@ class UserAPI(BaseAPIClient):
 
     @BaseAPIClient.api_call_decorator
     def getFriends(
+            self,
             user:str,
             limit: int = 50,
             page: int = 1,
@@ -75,6 +76,7 @@ class UserAPI(BaseAPIClient):
         
     @BaseAPIClient.api_call_decorator
     def getInfo(
+        self,
         user: str,
         method: str = "user.getInfo",
     ) -> dict:
@@ -83,6 +85,7 @@ class UserAPI(BaseAPIClient):
     
     @BaseAPIClient.api_call_decorator
     def getLovedTracks(
+        self,
         user: str,
         limit: int = 50,
         page: int = 1,
@@ -93,6 +96,7 @@ class UserAPI(BaseAPIClient):
 
     @BaseAPIClient.api_call_decorator
     def getRecentTracks(
+        self,
         user: str,
         limit: int = 50,
         page: int = 1,
@@ -111,6 +115,7 @@ class UserAPI(BaseAPIClient):
     
     @BaseAPIClient.api_call_decorator
     def getTopAlbums(
+        self,
         user: str,
         period: str = "overall", # overall | 7day | 1month | 3month | 6month | 12month
         limit: int = 50,
@@ -126,6 +131,7 @@ class UserAPI(BaseAPIClient):
     
     @BaseAPIClient.api_call_decorator
     def getTopArtists(
+        self,
         user: str,
         period: str = "overall", # overall | 7day | 1month | 3month | 6month | 12month
         limit: int = 50,
@@ -141,6 +147,7 @@ class UserAPI(BaseAPIClient):
 
     @BaseAPIClient.api_call_decorator
     def getTopTags(
+        self,
         user: str,
         limit: int = 50,
         method: str = "user.getTopTags"
@@ -150,6 +157,7 @@ class UserAPI(BaseAPIClient):
 
     @BaseAPIClient.api_call_decorator
     def getTopTracks(
+        self,
         user: str,
         period: str = "overall", # overall | 7day | 1month | 3month | 6month | 12month
         limit: int = 50,
@@ -163,4 +171,43 @@ class UserAPI(BaseAPIClient):
         """
         pass
 
+@dataclass
+class TrackAPI(BaseAPIClient):
+    @BaseAPIClient.api_call_decorator
+    def getInfo(
+        self,
+        track: str, 
+        artist: str, 
+        mbid:str = "", #Musicbrainz 
+        method: str = "track.getInfo"
+    ) -> dict:
+        """
+        Get the metadata for a track on Last.fm using the artist/track name or a musicbrainz id.
+        """
+        pass
+
+    @BaseAPIClient.api_call_decorator
+    def search(
+        self,
+        track: str,
+        artist:str = "",
+        page: int = 1,
+        limit: int = 30,
+        method: str = "track.search"
+    ) -> dict: 
+        """
+        Search for a track by track name. Returns track matches sorted by relevance.
+        """
+        pass
+
+    @BaseAPIClient.api_call_decorator
+    def getSimilar(
+        self,
+        track: str,
+        artist: str,
+        mbid: str = "",
+        limit: int = 30,
+        method: str = "track.getSimilar",
+    ) -> dict:
+        pass
 

@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib as plt
-from APIClient import UserAPI
+from APIClient import UserAPI, TrackAPI
 from datetime import datetime
 import json
 import sqlite3
@@ -14,16 +14,5 @@ import database
 if __name__ == "__main__":
 
     username = ""
-    
 
-    user = UserAPI()
-
-    tracklist = database.get_user_listened_tracks(
-        username= username,
-        from_date=datetime(2022, 1, 14),
-        to_date=datetime(2022, 2, 1),
-        #period="7day",
-        limit=200
-    )
-
-    database.upload_tracks(username, tracklist)
+    database.update_user_listened_tracks(username, period="overall")
